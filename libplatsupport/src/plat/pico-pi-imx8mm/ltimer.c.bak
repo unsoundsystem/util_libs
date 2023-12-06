@@ -1,0 +1,33 @@
+#include <platsupport/io.h>
+#include <platsupport/ltimer.h>
+#define CNT_CONTROL_BASE 0x306a0000
+
+int get_time(void *data, uint64_t *time)
+{
+	return EINVAL;
+}
+
+int set_timeout(void *data, uint64_t ns, timeout_type_t type)
+{
+	return EINVAL;
+}
+
+int reset(void *data)
+{
+	return EINVAL;
+}
+
+void destroy(void *data)
+{
+}
+
+int ltimer_default_init(ltimer_t *ltimer, ps_io_ops_t ops, ltimer_callback_fn_t callback,
+						void *callback_token)
+{
+	assert(ltimer != NULL);
+
+	ltimer->get_time = get_time;
+	ltimer->set_timeout = set_timeout;
+	ltimer->reset = reset;
+	ltimer->destroy = destroy;
+}

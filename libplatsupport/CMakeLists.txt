@@ -106,6 +106,7 @@ if(
     OR KernelPlatformImx8mq-evk
     OR KernelPlatformImx8mm-evk
     OR KernelPlatformMaaxboard
+    OR KernelPlatformPico-pi-imx8mm
 )
     list(APPEND deps src/mach/${LibPlatSupportMach}/serial/serial.c)
 endif()
@@ -115,6 +116,11 @@ if(KernelPlatImx8mq OR KernelPlatformImx8mm-evk)
     # There's no clock driver at the moment, but this is to allow the
     # libethdrivers to build for imx8mq
     list(APPEND deps src/plat/imx8m/clock.c)
+endif()
+
+if(KernelPlatformPico-pi-imx8mm)
+    list(APPEND deps src/plat/pico-pi-imx8mm/chardev.c)
+    list(APPEND deps src/plat/pico-pi-imx8mm/clock.c)
 endif()
 
 if(KernelPlatPC99)
@@ -134,6 +140,10 @@ add_library(platsupport EXCLUDE_FROM_ALL ${deps})
 
 if(KernelPlatImx8mq OR KernelPlatformImx8mm-evk)
     target_include_directories(platsupport PUBLIC plat_include/imx8m)
+endif()
+
+if(KernelPlatformPico-pi-imx8mm)
+    target_include_directories(platsupport PUBLIC plat_include/pico-pi-imx8mm)
 endif()
 
 if(KernelPlatformZynqmp)
